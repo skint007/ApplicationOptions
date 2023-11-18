@@ -17,6 +17,9 @@ Checkout github for some examples.</Description>
 		<LangVersion>latest</LangVersion>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
+	<PropertyGroup>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
 	<ItemGroup>
 	  <None Include="..\options-64.png">
 	    <Pack>True</Pack>
