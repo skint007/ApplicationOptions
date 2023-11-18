@@ -1,17 +1,15 @@
 
-Main [![nuget][nuget-badge1]][nuget-url1] Extension [![nuget][nuget-badge2]][nuget-url2]
+[![nuget][nuget-badge1]][nuget-url1]
 
- [nuget-badge1]: https://img.shields.io/badge/nuget-v1.3.2-blue.svg
+ [nuget-badge1]: https://img.shields.io/badge/nuget-v2.0.0-blue.svg
  [nuget-url1]: https://www.nuget.org/packages/ApplicationOptions
- [nuget-badge2]: https://img.shields.io/badge/nuget-v1.3.2-blue.svg
- [nuget-url2]: https://www.nuget.org/packages/ApplicationOptions.Notify
  [source-url]: https://github.com/skint007/ApplicationOptions
  # ApplicationOptions
- A very simple libary for creating easy to use to use application settings that use json serialization.
+ A very simple library for creating easy to use to use application settings that use json serialization.
 
 ## What it does?
 
-This library allows you to quickly and easily create application settings classes. You can extend it with ApplicationOptions.Notify to allow for built in property changed events.
+This library allows you to quickly and easily create application settings classes. 
 I generally use this in my WPF apps.
 
 ## Prerequisites
@@ -22,11 +20,9 @@ I generally use this in my WPF apps.
 
 <pre>
   nuget install ApplicationOptions
-  nuget install ApplicationOptions.Notify
 </pre>
 
- - [NuGet package][nuget-url1] (ApplicationOptions)
- - [NuGet package][nuget-url2] (ApplicationOptions.Notify)
+ - [NuGet package][nuget-url1]
  - [Source code][source-url]
 
  ## Example app settings class
@@ -34,13 +30,29 @@ I generally use this in my WPF apps.
  ```csharp
 public class AppSettings : BaseOptions<AppSettings>
 {
+	// Override base folder
+	protected override string BaseFolder => @"settings\";
+
+	// Override file name (Default is $"options.{typeof(T).Name}.json")
+	protected override string FileName => "appsettings.json";
+
 	public DateTime LastLaunch { get; set; }
 	public string ApiKey { get; set; }
 	public string ApiEndpoint { get; set; }
 	//Sets a default value when initializing new settings
 	public Rectangle WindowPosition { get; set; } = new Rectangle(100, 100, 850, 900);
+
+	
 }
+```
+
+## Example subscribing to events
+```csharp
+BaseOptionSettings.WatchForOptionChanges = true;
+AppSettings.Instance.Loaded += () => Console.WriteLine("AppSettings Loaded");
+AppSettings.Instance.Saved += () => Console.WriteLine("AppSettings Saved");
  ```
+ 
  ## Example usage
  ```csharp
 public class MyWindow : Window
@@ -57,11 +69,23 @@ public class MyWindow : Window
 	
 	private void OnClosing()
 	{
-		BaseOptions.LoadedOptions.ForEach(o => o.Save());
+		BaseOptionSettings.LoadedOptions.ForEach(o => o.Save());
 	}
 }
  ```
 
+ ## Global settings usage
+ The `BaseOptionSettings` class lets you configure how the BaseOptions class.
+ ```csharp
+ // Watch for changes in the settings files
+ BaseOptionSettings.WatchForOptionChanges = true;
+
+ // Save all loaded options
+ BaseOptionSettings.LoadedOptions.ForEach(o => o.Save());
+
+ // Indent the json files or not
+ BaseOptionSettings.IndentJson = false;
+ ```
 ## Quick contributing guide
 
  - Fork and clone locally

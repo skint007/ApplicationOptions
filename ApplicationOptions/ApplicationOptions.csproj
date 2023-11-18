@@ -1,27 +1,34 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
+		<Nullable>enable</Nullable>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 		<PackageTags>Settings;Options;json</PackageTags>
-		<AssemblyVersion>1.3.2</AssemblyVersion>
+		<AssemblyVersion>2.0.0</AssemblyVersion>
 		<FileVersion>$(AssemblyVersion)</FileVersion>
 		<VersionPrefix>$(AssemblyVersion)</VersionPrefix>
 		<Authors>skint007</Authors>
-		<Description>A simple app settings class that allows for easy json app settings management.
+		<Description>A simple app settings class that allows for easy app settings management with json files.
 Checkout github for some examples.</Description>
 		<PackageProjectUrl>https://github.com/skint007/ApplicationOptions</PackageProjectUrl>
 		<PackageIcon>options-64.png</PackageIcon>
 		<RepositoryUrl>https://github.com/skint007/ApplicationOptions</RepositoryUrl>
+		<LangVersion>latest</LangVersion>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Include="..\options-64.png">
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>
 	  </None>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 </Project>
